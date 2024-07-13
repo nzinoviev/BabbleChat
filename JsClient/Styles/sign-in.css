@@ -94,11 +94,17 @@ body {
 
 .sign-in-form__input-group {
    margin: 15px 0 0 0;
+   position: relative;
 }
 
 .sign-in-form__input-group-label {
+   position: absolute;
    display: block;
-   margin: 0 0 5px 0;
+   margin: 0 0 5px 0px;
+   top: -10px;
+   left: 6px;
+   background-color: white;
+   padding: 0 2px;
 }
 
 .sign-in-form__sign-in-btn {
