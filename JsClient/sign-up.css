@@ -1,0 +1,114 @@
+/* Nullifying style. */
+* {
+   padding: 0;
+   margin: 0;
+   border: 0;
+}
+
+*, *:before, *:after {
+   -moz-box-sizing: border-box;
+   -webkit-box-sizing: border-box;
+   box-sizing: border-box;
+}
+
+/* :focus, :active {
+   outline: none;
+} */
+
+/* a:focus, a:active {
+   outline: none;
+} */
+
+nav, footer, header, aside {
+   display: block;
+}
+
+html, body {
+   height: 100%;
+   width: 100%;
+   font-size: 100%;
+   /* line-height: 1; */
+   /* font-size: 14px; */
+   -ms-text-size-adjust: 100%;
+   -moz-text-size-adjust: 100%;
+   -webkit-text-size-adjust: 100%;
+}
+
+input, button, textarea {
+   font-family: inherit;
+}
+
+/* input::-ms-clear {
+   display: none;
+} */
+
+/* button {
+   cursor: pointer;
+} */
+
+/* button::-moz-focus-inner {
+   padding: 0;
+   border: 0;
+} */
+
+/* a, a:visited {
+   text-decoration: none;
+} */
+
+/* a:hover {
+   text-decoration: none;
+} */
+
+/* ul li{
+   list-style: none;
+} */
+
+/* img {
+   vertical-align: top;
+} */
+
+body {
+   display: flex  ;
+   flex-direction: column;
+   align-items: center;
+   margin-top: 12%;
+}
+
+.sign-up-form {
+   border: 1px dashed rgb(129, 10, 30);
+   display: flex;
+   flex-direction: column;
+}
+
+.sign-up-form__title {
+   align-self: center;
+}
+
+.sign-up-form__input-group {
+   margin: 25px 0 0 0;
+   position: relative;
+}
+
+.sign-up-form__input-text {
+   width: 350px;
+   height: 50px;
+   border-radius: 10px;
+   border: 1px solid black;
+}
+
+.sign-up-form__input-group-label {
+   position: absolute;
+   display: block;
+   margin: 0 0 5px 0;
+   top: -10px;
+   left: 6px;
+   background-color: white;
+   padding: 0 2px;
+}
+
+.sign-up-form__sign-up-btn {
+   width: 350px;
+   height: 50px;
+   margin: 40px 0 0 0;
+   border-radius: 10px;
+}
