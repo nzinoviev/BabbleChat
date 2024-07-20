@@ -4,13 +4,20 @@ body {
    display: flex;
    flex-direction: column;
    align-items: center;
-   margin-top: 12%;
+   margin-top: 7.5%;
 }
 
 .sign-in-form {
    border: 1px dashed rgb(129, 10, 30);
    display: flex;
    flex-direction: column;
+}
+
+.sign-in-form__logo {
+   display: block;
+   max-width: 160px;
+   max-height: 160px;
+   align-self: center;
 }
 
 .sign-in-form__title {
