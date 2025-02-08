@@ -1,11 +1,11 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import RegistrationPage from "../Pages/RegistrationPage";
+import SignUpPage from "../Pages/SignUpPage";
 
 const AppRouter = () => {
    return (
       <Routes>
-         <Route path="/registration" element={<RegistrationPage/>} />
+         <Route path="/signup" element={<SignUpPage/>} />
       </Routes>
    );
 };
