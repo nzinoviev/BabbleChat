@@ -7,7 +7,7 @@ import babbleLogoPng from "../Assets/babble-logo.png";
 function SignUpPage() {
    const [socket, setSocket] = useState(null);
    const [username, setUsername] = useState("");
-   const [fullName, setFullName] = useState("");
+   const [fullname, setFullname] = useState("");
    const [password, setPassword] = useState("");
    const [confirmPassword, setConfirmPassowrd] = useState("");
 
@@ -26,7 +26,7 @@ function SignUpPage() {
       }
 
       socket.connect();
-      const userData = { fullName, username, password };
+      const userData = { fullname, username, password };
       socket.emit("signUp", userData);
    }
 
@@ -38,7 +38,7 @@ function SignUpPage() {
 
          <div className="sign-up-form__input-group">
             <label htmlFor="" className="sign-up-form__input-group-label">Full Name</label>
-            <input type="text" className="sign-up-form__input-text" value={fullName} onChange={(e) => setFullName(e.target.value)}/>
+            <input type="text" className="sign-up-form__input-text" value={fullname} onChange={(e) => setFullname(e.target.value)}/>
          </div>
 
          <div className="sign-up-form__input-group">
