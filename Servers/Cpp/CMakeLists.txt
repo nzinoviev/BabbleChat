@@ -15,3 +15,5 @@ message(STATUS "| Compiler for C++ : ${CMAKE_CXX_COMPILER_ID}")
 message(STATUS "| Operating system : ${CMAKE_SYSTEM_NAME}")
 message(STATUS "| Architecture     : ${CMAKE_SYSTEM_PROCESSOR}")
 message(STATUS "*==================================*")
+
+add_subdirectory(Src)
