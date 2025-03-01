@@ -5,3 +5,5 @@ Clients/Js/package-lock.json
 # For Servers.
 Servers/Js/node_modules/*
 Servers/Js/package-lock.json
+
+Servers/Cpp/build/*
