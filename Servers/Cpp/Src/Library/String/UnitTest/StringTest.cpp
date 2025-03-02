@@ -37,6 +37,14 @@ TEST(StringConstructorTest, CString_SmallString) {
 }
 
 
+TEST(StringConstructorTest, CopyCtor_Correct) {
+   BabbleChat::String str1("first string");
+   BabbleChat::String str2 = str1;
+
+   EXPECT_STREQ(str1.Data(), str2.Data());
+}
+
+
 int main(int argc, char *argv[])
 {
    ::testing::InitGoogleTest(&argc, argv);

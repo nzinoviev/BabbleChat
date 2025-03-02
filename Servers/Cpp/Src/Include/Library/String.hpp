@@ -29,6 +29,11 @@ public:
    String(const char* Str);
 
    /**
+    * @brief Конструктор копирования.
+    */
+   String(const String& Other);
+
+   /**
     * @brief Деструктор.
     */
    ~String();

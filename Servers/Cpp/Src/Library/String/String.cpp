@@ -57,9 +57,9 @@ String::String(const char* Str) {
    }
 
    dataSize_ = Strlen(Str) + sizeof('\0');
+   length_ = dataSize_ - 1;
    try {
       data_ = new char[dataSize_];
-      length_ = dataSize_ - 1;
    }
    catch (const std::bad_alloc&) {
       data_ = nullptr;
@@ -69,6 +69,23 @@ String::String(const char* Str) {
    }
 
    std::memcpy(data_, Str, dataSize_);
+}
+
+
+String::String(const String& Other) {
+   dataSize_ = Other.dataSize_;
+   length_ = Other.length_;
+
+   try
+   {
+      data_ = new char[dataSize_];
+   }
+   catch(const std::bad_alloc&)
+   {
+      throw std::runtime_error("Bad Alloc in String Copy Constructor.");
+   }
+
+   std::memcpy(data_, Other.data_, dataSize_);
 }
 
 
