@@ -13,6 +13,9 @@
  *          - Удаление элемента: O(log n) в среднем случае, O(n) в худшем случае.
  */
 
+// TODO: Добавить header guards.
+// TODO: Добавить деструктор.
+// TODO: Закончить класс Iterator.
 
 namespace BabbleChat {
 
