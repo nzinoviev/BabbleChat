@@ -21,6 +21,9 @@
 
 // TODO: Добавить деструктор.
 // TODO: Закончить класс Iterator.
+// TODO: Добавить проверку PVS.
+// TODO: Добавить дополнительные флаги gcc.
+// TODO: Добавить проверки на утечку памяти. 
 
 namespace BabbleChat {
 
@@ -128,18 +131,18 @@ public:
     * @brief   Возвращает итератор, указывающий на первый элемент дерева.
     * @return  Итератор на начало дерева. Если дерево пустое, возвращает итератор, равный end().
     */
-   Iterator begin();
+   Iterator begin() const;
 
    /**
     * @brief   Возвращает итератор, указывающий на конец дерева.
     * @return  Итератор на конец дерева.
     */
-   Iterator end();
+   Iterator end() const;
 
    /**
     * @brief Помещает данные в дерево.
     * @param[in] Data Данные.
-    * @todo: Подумать над статусом возврата. 
+    * TODO: Подумать над статусом возврата.
     */
    void Insert(const T& Data);
 
@@ -190,7 +193,35 @@ BinaryTree<T>::Iterator::operator++() noexcept {
       }
       current_ = parent;
    }
+
    return *this;
+}
+
+
+template <typename T>
+typename BinaryTree<T>::Iterator
+BinaryTree<T>::Iterator::operator++(int) noexcept {
+   Iterator ret(current_);
+
+   if (nullptr == current_) {
+      return ret;
+   }
+
+   if (current_->rightLeaf_ != nullptr) {
+      current_ = current_->rightLeaf_;
+      while (current_->leftLeaf_ != nullptr) {
+         current_ = current_->leftLeaf_;
+      }
+   } else {
+      TreeNode* parent = current_->parent_;
+      while (parent != nullptr && current_ == parent->rightLeaf_) {
+         current_ = parent;
+         parent = parent->parent_;
+      }
+      current_ = parent;
+   }
+
+   return ret;
 }
 
 
@@ -218,7 +249,7 @@ BinaryTree<T>::BinaryTree() noexcept : root_(nullptr) {}
 template <typename T>
 void BinaryTree<T>::Insert(const T& Data) {
    if (nullptr == root_) {
-      root_ = new TreeNode{Data, nullptr, nullptr, nullptr};
+      root_ = new TreeNode { Data, nullptr, nullptr, nullptr };
    } else {
       TreeNode* current = root_;
       TreeNode* previous = root_;
@@ -231,7 +262,7 @@ void BinaryTree<T>::Insert(const T& Data) {
             current = current->leftLeaf_;
          }
       }
-      current = new TreeNode{Data, previous, nullptr, nullptr};
+      current = new TreeNode { Data, previous, nullptr, nullptr };
 
       if (previous->data_ < current->data_) {
          previous->rightLeaf_ = current;
@@ -243,19 +274,19 @@ void BinaryTree<T>::Insert(const T& Data) {
 
 
 template <typename T>
-typename BinaryTree<T>::Iterator BinaryTree<T>::begin() {
+typename BinaryTree<T>::Iterator BinaryTree<T>::begin() const {
    TreeNode* left = root_;
    while (left != nullptr && left->leftLeaf_ != nullptr)
    {
       left = left->leftLeaf_;
    }
-   return Iterator{left};
+   return Iterator { left };
 }
 
 
 template <typename T>
-typename BinaryTree<T>::Iterator BinaryTree<T>::end() {
-   return Iterator{nullptr};
+typename BinaryTree<T>::Iterator BinaryTree<T>::end() const {
+   return Iterator { nullptr };
 }
 
 }
