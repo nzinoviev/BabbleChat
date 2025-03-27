@@ -13,7 +13,9 @@
  *          - Удаление элемента: O(log n) в среднем случае, O(n) в худшем случае.
  */
 
-// TODO: Добавить header guards.
+#ifndef __BINARY_TREE_H__
+#define __BINARY_TREE_H__
+
 // TODO: Добавить деструктор.
 // TODO: Закончить класс Iterator.
 
@@ -253,3 +255,5 @@ typename BinaryTree<T>::Iterator BinaryTree<T>::end() {
 }
 
 }
+
+#endif // __BINARY_TREE_H__
