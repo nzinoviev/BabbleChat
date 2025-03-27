@@ -16,6 +16,9 @@
 #ifndef __BINARY_TREE_H__
 #define __BINARY_TREE_H__
 
+#include <cstddef>
+#include <iterator>
+
 // TODO: Добавить деструктор.
 // TODO: Закончить класс Iterator.
 
@@ -29,12 +32,91 @@ namespace BabbleChat {
 template <typename T>
 class BinaryTree {
 private:
-   // Предварительное объявление TreeNode.
-   struct TreeNode;
+   /**
+    * @struct  TreeNode
+    * @brief   Внутренняя структура, описывающая узел бинарного дерева.
+    */
+   struct TreeNode {
+      T           data_;      /** Данные, хранящиеся в узле. */
+      TreeNode*   parent_;    /** Указатель на родительский узел. */
+      TreeNode*   leftLeaf_;  /** Указатель на левый дочерний узел. */
+      TreeNode*   rightLeaf_; /** Указатель на правый дочерний узел. */
+   };
 
 public:
-   // Предварительное объявление Iterator.
-   class Iterator;
+   /**
+    * @class   Iterator
+    * @brief   Внутренний класс. Реализует итератор для обхода элементов бинарного дерева.
+    */
+   class Iterator {
+      public:
+         using iterator_category = std::bidirectional_iterator_tag;
+         using value_type        = T;
+         using difference_type   = std::ptrdiff_t;
+         using pointer           = T*;
+         using reference         = T&;
+
+         /**
+          * @brief Конструктор.
+          * @param[in] Node Указатель на узел дерева.
+          */
+         explicit Iterator(TreeNode* Node) noexcept;
+
+         /**
+          * @brief   Оператор разыменования.
+          * @return  Ссылка на данные текущего узла.
+          */
+         reference operator*() const noexcept;
+
+         /**
+          * @brief   Оператор доступа к члену.
+          * @return  Указатель на данные текущего узла.
+          */
+         pointer operator->() const noexcept;
+
+         /**
+          * @brief Префиксный инкремент.
+          * @return Итератор, указывающий на следующий узел.
+          */
+         Iterator& operator++() noexcept;
+
+         /**
+          * @brief Постфиксный инкремент.
+          * @return Итератор, указывающй на текущий узел до инкремента.
+          */
+         Iterator operator++(int) noexcept;
+
+         /**
+          * @brief Префиксный декремент.
+          * @return Итератор, указывающий на предыдущий узел.
+          */
+         Iterator& operator--() noexcept;
+
+         /**
+          * @brief Постфиксный декремент.
+          * @return Итератор, указывающий на узел до декремента.
+          */
+         Iterator operator--(int) noexcept;
+
+         /**
+          * @brief Оператор сравнения на равенство.
+          * @param[in] Other Итератор для сравнения.
+          * @retval true   Если итераторы указывают на один и тот же узел.
+          * @retval false  Если итераторы указывают на разные узлы.
+          */
+         bool operator==(const Iterator& Other) const noexcept;
+
+         /**
+          * @brief Оператор сравнения на неравенство.
+          * @param[in] Other Итератор для сравнения.
+          * @retval true   Если итераторы указывают на разные узлы.
+          * @retval false  Если итераторы указывают на один и тот же узел.
+          */
+         bool operator!=(const Iterator& Other) const noexcept;
+
+      private:
+         TreeNode* current_; /** Указатель на текущий узел дерева. */
+      };
 
 public:
    /**
@@ -62,87 +144,6 @@ public:
    void Insert(const T& Data);
 
 private:
-   /**
-    * @struct  TreeNode
-    * @brief   Внутренняя структура, описывающая узел бинарного дерева.
-    */
-   struct TreeNode {
-      T           data_;      /** Данные, хранящиеся в узле. */
-      TreeNode*   parent_;    /** Указатель на родительский узел. */
-      TreeNode*   leftLeaf_;  /** Указатель на левый дочерний узел. */
-      TreeNode*   rightLeaf_; /** Указатель на правый дочерний узел. */
-   };
-
-public:
-   /**
-    * @class   Iterator
-    * @brief   Внутренний класс. Реализует итератор для обхода элементов бинарного дерева.
-    */
-   class Iterator {
-   public:
-      /**
-       * @brief Конструктор.
-       * @param[in] Node Указатель на узел дерева.
-       */
-      Iterator(TreeNode* Node);
-
-      /**
-       * @brief   Оператор разыменования.
-       * @return  Ссылка на данные текущего узла.
-       */
-      T& operator*();
-
-      /**
-       * @brief   Оператор доступа к члену.
-       * @return  Указатель на данные текущего узла.
-       */
-      T* operator->();
-
-      /**
-       * @brief Префиксный инкремент.
-       * @return Итератор, указывающий на следующий узел.
-       */
-      Iterator& operator++();
-
-      /**
-       * @brief Постфиксный инкремент.
-       * @return Итератор, указывающй на текущий узел до инкремента.
-       */
-      Iterator operator++(int);
-
-      /**
-       * @brief Префиксный декремент.
-       * @return Итератор, указывающий на предыдущий узел.
-       */
-      Iterator& operator--();
-
-      /**
-       * @brief Постфиксный декремент.
-       * @return Итератор, указывающий на узел до декремента.
-       */
-      Iterator operator--(int);
-
-      /**
-       * @brief Оператор сравнения на равенство.
-       * @param[in] Other Итератор для сравнения.
-       * @retval true   Если итераторы указывают на один и тот же узел.
-       * @retval false  Если итераторы указывают на разные узлы.
-       */
-      bool operator==(const Iterator& Other) const;
-
-      /**
-       * @brief Оператор сравнения на неравенство.
-       * @param[in] Other Итератор для сравнения.
-       * @retval true   Если итераторы указывают на разные узлы.
-       * @retval false  Если итераторы указывают на один и тот же узел.
-       */
-      bool operator!=(const Iterator& Other) const;
-
-   private:
-      TreeNode* current_; /** Указатель на текущий узел дерева. */
-   };
-
-private:
    TreeNode* root_; /** Указатель на корневой узел дерева. */
 };
 
@@ -152,24 +153,27 @@ private:
 ///////////////////////////////////////////////////////////////////////////////
 
 template <typename T>
-BinaryTree<T>::Iterator::Iterator(TreeNode* Node) : current_(Node) {}
+BinaryTree<T>::Iterator::Iterator(TreeNode* Node) noexcept : current_(Node) {}
 
 
 template <typename T>
-T& BinaryTree<T>::Iterator::operator*() {
+typename BinaryTree<T>::Iterator::reference
+BinaryTree<T>::Iterator::operator*() const noexcept {
    return current_->data_;
 }
 
 
 template <typename T>
-T* BinaryTree<T>::Iterator::operator->() {
+typename BinaryTree<T>::Iterator::pointer
+BinaryTree<T>::Iterator::operator->() const noexcept {
    return &current_->data_;
 }
 
 
 template <typename T>
-typename BinaryTree<T>::Iterator& BinaryTree<T>::Iterator::operator++() {
-   if (current_ == nullptr) {
+typename BinaryTree<T>::Iterator&
+BinaryTree<T>::Iterator::operator++() noexcept {
+   if (nullptr == current_) {
       return *this;
    }
 
@@ -191,13 +195,13 @@ typename BinaryTree<T>::Iterator& BinaryTree<T>::Iterator::operator++() {
 
 
 template <typename T>
-bool BinaryTree<T>::Iterator::operator==(const BinaryTree<T>::Iterator& Other) const {
+bool BinaryTree<T>::Iterator::operator==(const BinaryTree<T>::Iterator& Other) const noexcept {
    return current_ == Other.current_;
 }
 
 
 template <typename T>
-bool BinaryTree<T>::Iterator::operator!=(const BinaryTree<T>::Iterator& Other) const {
+bool BinaryTree<T>::Iterator::operator!=(const BinaryTree<T>::Iterator& Other) const noexcept {
    return !(*this == Other);
 }
 
