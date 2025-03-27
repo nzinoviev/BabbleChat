@@ -10,6 +10,10 @@
 #include <Include/Library/BinaryTree.hpp>
 
 
+///////////////////////////////////////////////////////////////////////////////
+/// BinaryTree::Iterator Tests
+///////////////////////////////////////////////////////////////////////////////
+
 TEST(BinaryTreeIterator, EmptyTree) {
    BabbleChat::BinaryTree<int> tree;
 
@@ -76,6 +80,49 @@ TEST(BinaryTreeIterator, EqualityInequalityOperators) {
    ++it1;
    EXPECT_FALSE(it1 == it2);
    EXPECT_TRUE(it1 != it2);
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+/// BinaryTree Tests
+///////////////////////////////////////////////////////////////////////////////
+
+TEST(BinaryTree, Insert_SingleInsertion) {
+   BabbleChat::BinaryTree<int> tree;
+   tree.Insert(42);
+
+   auto begin = tree.begin();
+   auto end = tree.end();
+
+   // Дерево не должно быть пустым.
+   ASSERT_NE(begin, end);
+
+   // Первый элементь должен быть равен 42.
+   EXPECT_EQ(*begin, 42);
+
+   // Если в дереве один элемент, то после инкремента итератор begin должен стать равным end.
+   ++begin;
+   EXPECT_EQ(begin, end);
+}
+
+
+TEST(BinaryTree, Insert__MultipleInsertion) {
+   BabbleChat::BinaryTree<int> tree;
+
+   std::vector values = { 10, 5, 15, 3, 7, 12, 17 };
+   for (int value : values) {
+      tree.Insert(value);
+   }
+
+   // Ожидаемый результат in-order обхода.
+   std::vector<int> expected = { 3, 5, 7, 10, 12, 15, 17 };
+   std::vector<int> result;
+
+   for (auto it = tree.begin(); it != tree.end(); ++it) {
+      result.push_back(*it);
+   }
+
+   EXPECT_EQ(result,expected);
 }
 
 

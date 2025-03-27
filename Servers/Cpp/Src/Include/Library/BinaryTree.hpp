@@ -122,7 +122,7 @@ public:
    /**
     * @brief Конструктор по умолчанию.
     */
-   BinaryTree();
+   BinaryTree() noexcept;
 
    /**
     * @brief   Возвращает итератор, указывающий на первый элемент дерева.
@@ -212,7 +212,7 @@ bool BinaryTree<T>::Iterator::operator!=(const BinaryTree<T>::Iterator& Other) c
 
 
 template <typename T>
-BinaryTree<T>::BinaryTree() : root_(nullptr) {}
+BinaryTree<T>::BinaryTree() noexcept : root_(nullptr) {}
 
 
 template <typename T>
