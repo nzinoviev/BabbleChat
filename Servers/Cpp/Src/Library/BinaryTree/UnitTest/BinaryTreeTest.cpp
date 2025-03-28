@@ -126,6 +126,89 @@ TEST(BinaryTree, Insert__MultipleInsertion) {
 }
 
 
+std::vector<int> TreeToVector(BabbleChat::BinaryTree<int>& Tree) {
+   std::vector<int> result;
+
+   for (auto it = Tree.begin(); it != Tree.end(); ++it) {
+      result.push_back(*it);
+   }
+
+   return result;
+}
+
+
+TEST(BinaryTree, Remove_LeafNode) {
+   BabbleChat::BinaryTree<int> tree;
+
+   tree.Insert(50);
+   tree.Insert(30);
+   tree.Insert(70);
+   tree.Insert(20);
+   tree.Insert(40);
+   tree.Insert(60);
+   tree.Insert(80);
+
+   EXPECT_TRUE(tree.Remove(20));
+
+   std::vector<int> result = TreeToVector(tree);
+   EXPECT_EQ(result, std::vector<int>({ 30, 40, 50, 60, 70, 80 }));
+}
+
+
+TEST(BinaryTree, Remove_NodeWithOneChild) {
+   BabbleChat::BinaryTree<int> tree;
+
+   tree.Insert(50);
+   tree.Insert(30);
+   tree.Insert(70);
+   tree.Insert(20);
+   tree.Insert(40);
+   tree.Insert(60);
+   tree.Insert(80);
+
+   EXPECT_TRUE(tree.Remove(40));
+
+   std::vector<int> result = TreeToVector(tree);
+   EXPECT_EQ(result, std::vector<int>({ 20, 30, 50, 60, 70, 80 }));
+}
+
+
+TEST(BinaryTree, Remove_NodeWithTwoChildren) {
+   BabbleChat::BinaryTree<int> tree;
+
+   tree.Insert(50);
+   tree.Insert(30);
+   tree.Insert(70);
+   tree.Insert(20);
+   tree.Insert(40);
+   tree.Insert(60);
+   tree.Insert(80);
+
+   EXPECT_TRUE(tree.Remove(30));
+
+   std::vector<int> result = TreeToVector(tree);
+   EXPECT_EQ(result, std::vector<int>({ 20, 40, 50, 60, 70, 80 }));
+}
+
+
+TEST(BinaryTree, Remove_RootNode) {
+   BabbleChat::BinaryTree<int> tree;
+
+   tree.Insert(50);
+   tree.Insert(30);
+   tree.Insert(70);
+   tree.Insert(20);
+   tree.Insert(40);
+   tree.Insert(60);
+   tree.Insert(80);
+
+   EXPECT_TRUE(tree.Remove(50));
+
+   std::vector<int> result = TreeToVector(tree);
+   EXPECT_EQ(result, std::vector<int>({ 20, 30, 40, 60, 70, 80 }));
+}
+
+
 int main(int argc, char *argv[])
 {
    ::testing::InitGoogleTest(&argc, argv);

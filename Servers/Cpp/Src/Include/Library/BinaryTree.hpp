@@ -146,6 +146,18 @@ public:
     */
    void Insert(const T& Data);
 
+   /**
+    * @brief Удалет данные из дерева.
+    * @param[in] Data Данные, которые будут удалены.
+    * TODO: Подумать над статусом возврата.
+    */
+   bool Remove(const T& Data);
+
+private:
+   bool RemoveNode(TreeNode*& Node, const T& Data);
+
+   TreeNode* FindMin(TreeNode* Node) const;
+
 private:
    TreeNode* root_; /** Указатель на корневой узел дерева. */
 };
@@ -270,6 +282,57 @@ void BinaryTree<T>::Insert(const T& Data) {
          previous->leftLeaf_ = current;
       }
    }
+}
+
+
+template <typename T>
+bool BinaryTree<T>::Remove(const T& Data) {
+   return RemoveNode(root_, Data);
+}
+
+
+template <typename T>
+bool BinaryTree<T>::RemoveNode(TreeNode*& Node, const T& Data) {
+   if (nullptr == Node) {
+      return false;
+   }
+
+   if (Data < Node->data_) {
+      return RemoveNode(Node->leftLeaf_, Data);
+   } else if (Data > Node->data_) {
+      return RemoveNode(Node->rightLeaf_, Data);
+   } else {
+      // Найден узел для удаления.
+      if (nullptr == Node->leftLeaf_ && nullptr == Node->rightLeaf_) {
+         delete Node;
+         Node = nullptr;
+      } else if (nullptr == Node->leftLeaf_) {
+         TreeNode* tmp = Node;
+         Node = Node->rightLeaf_;
+         Node->parent_ = tmp->parent_;
+         delete tmp;
+      } else if (nullptr == Node->rightLeaf_) {
+         TreeNode* tmp = Node;
+         Node = Node->leftLeaf_;
+         Node->parent_ = tmp->parent_;
+         delete tmp;
+      } else {
+         TreeNode* minNode = FindMin(Node->rightLeaf_);
+         Node->data_ = minNode->data_;
+         RemoveNode(Node->rightLeaf_, minNode->data_);
+      }
+      return true;
+   }
+}
+
+
+template <typename T>
+typename BabbleChat::BinaryTree<T>::TreeNode*
+BabbleChat::BinaryTree<T>::FindMin(TreeNode* Node) const {
+   while (Node->leftLeaf_ != nullptr) {
+      Node = Node->leftLeaf_;
+   }
+   return Node;
 }
 
 
