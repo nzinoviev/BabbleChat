@@ -209,6 +209,23 @@ TEST(BinaryTree, Remove_RootNode) {
 }
 
 
+TEST(BinaryTree, Clear) {
+   BabbleChat::BinaryTree<int> tree;
+
+   tree.Insert(50);
+   tree.Insert(30);
+   tree.Insert(70);
+   tree.Insert(20);
+   tree.Insert(40);
+   tree.Insert(60);
+   tree.Insert(80);
+
+   tree.Clear();
+
+   EXPECT_EQ(tree.begin(), tree.end());
+}
+
+
 int main(int argc, char *argv[])
 {
    ::testing::InitGoogleTest(&argc, argv);

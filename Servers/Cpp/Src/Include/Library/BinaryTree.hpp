@@ -153,10 +153,15 @@ public:
     */
    bool Remove(const T& Data);
 
+
+   void Clear();
+
 private:
    bool RemoveNode(TreeNode*& Node, const T& Data);
 
    TreeNode* FindMin(TreeNode* Node) const;
+
+   void ClearNode(TreeNode* Node);
 
 private:
    TreeNode* root_; /** Указатель на корневой узел дерева. */
@@ -333,6 +338,25 @@ BabbleChat::BinaryTree<T>::FindMin(TreeNode* Node) const {
       Node = Node->leftLeaf_;
    }
    return Node;
+}
+
+
+template <typename T>
+void BabbleChat::BinaryTree<T>::ClearNode(BabbleChat::BinaryTree<T>::TreeNode* Node) {
+   if (nullptr == Node) {
+      return;
+   }
+
+   ClearNode(Node->leftLeaf_);
+   ClearNode(Node->rightLeaf_);
+   delete Node;
+}
+
+
+template <typename T>
+void BabbleChat::BinaryTree<T>::Clear() {
+   ClearNode(root_);
+   root_ = nullptr;
 }
 
 
