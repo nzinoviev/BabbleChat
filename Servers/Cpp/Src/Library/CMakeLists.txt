@@ -1,1 +1,2 @@
 add_subdirectory(String)
+add_subdirectory(BinaryTree)
