@@ -16,7 +16,7 @@ jobs:
             sudo apt install -y cmake g++
 
          - name: Configure
-           run: cmake -Bbuild -DCMAKE_BUILD_TYPE=Release
+           run: cmake -Bbuild -S Servers/Cpp/ -DCMAKE_BUILD_TYPE=Release
 
          - name: Build
            run: cmake --build build --config Release
