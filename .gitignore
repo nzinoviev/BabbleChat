@@ -1,3 +1,5 @@
+.vscode
+
 # For Clients.
 Clients/Js/node_modules/*
 Clients/Js/package-lock.json
@@ -7,3 +9,4 @@ Servers/Js/node_modules/*
 Servers/Js/package-lock.json
 
 Servers/Cpp/build/*
+build/*
