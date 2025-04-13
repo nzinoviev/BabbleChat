@@ -1,15 +1,16 @@
+# --- Global ---
 .vscode/
 build/
 
-# For Clients.
+# --- For Clients ---
 Clients/Js/node_modules/*
 Clients/Js/package-lock.json
 
-# For Servers.
+# --- For Servers ---
 Servers/Js/node_modules/*
 Servers/Js/package-lock.json
 
 Servers/Cpp/build/*
 build/*
-
 Servers/Cpp/Src/Sandbox/a.out
+Servers/Cpp/Src/Sandbox/Draft.cpp
