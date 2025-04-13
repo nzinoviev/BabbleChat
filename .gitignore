@@ -15,3 +15,4 @@ Servers/Cpp/build/*
 build/*
 Servers/Cpp/Src/Sandbox/a.out
 Servers/Cpp/Src/Sandbox/Draft.cpp
+Servers/Cpp/Src/Sandbox/CMakeLists.txt
