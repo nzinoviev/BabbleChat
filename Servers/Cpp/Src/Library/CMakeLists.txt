@@ -1,2 +1,3 @@
 add_subdirectory(String)
 add_subdirectory(BinaryTree)
+add_subdirectory(FileLogger)
