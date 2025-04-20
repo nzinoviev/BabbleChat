@@ -12,6 +12,7 @@ Servers/Js/node_modules/*
 Servers/Js/package-lock.json
 
 Servers/Cpp/build/*
+Servers/Cpp/Output/*
 build/*
 Servers/Cpp/Src/Sandbox/a.out
 Servers/Cpp/Src/Sandbox/Draft.cpp
