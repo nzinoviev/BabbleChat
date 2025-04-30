@@ -134,4 +134,55 @@ private:
    bool           isReady_;   /** Флаг, указывающий на успешное открытие файла. */
 };
 
+
+/**
+ * @class   ConsoleLogger
+ * @brief   Реализация логгера, производящего запись в консоль. Используется паттерн Singleton.
+ */
+class ConsoleLogger final : public ILogger
+{
+public:
+   /**
+    * @brief   Возвращает единственный экземпляр логгера.
+    * @return  Ссылка на единственный экземпляр логгера.
+    */
+   static ConsoleLogger& GetInstance();
+
+   Status
+   Log(
+      const LoggerResultTag   ResultTag,
+      const LoggerMessageTag  MessageTag,
+      const std::string&      Message) override;
+
+
+   template <typename... Args>
+   Status Log(
+      const LoggerResultTag         ResultTag,
+      const LoggerMessageTag        MessageTag,
+      std::format_string<Args...>   Fmt,
+      Args&&...                     Arguments);
+
+private:
+   /**
+    * @brief   Приватный конструктор, предотвращающий создание экземпляров извне.
+    *          Используется только внутри метода GetInstance();
+    */
+   explicit ConsoleLogger() = default;
+
+   ConsoleLogger(const ConsoleLogger&) = delete;            /** Удаляем конструктор копирования. */
+   ConsoleLogger& operator=(const ConsoleLogger&) = delete; /** Удаляем оператор присваивания. */
+};
+
+
+template <typename... Args>
+Status ConsoleLogger::Log(
+   const LoggerResultTag         ResultTag,
+   const LoggerMessageTag        MessageTag,
+   std::format_string<Args...>   Fmt,
+   Args&&...                     Arguments)
+{
+   std::string message = std::format(Fmt, std::forward<Args>(Arguments)...);
+   return Log(ResultTag, MessageTag, message);
+}
+
 #endif // __LOGGER_H__
