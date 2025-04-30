@@ -1,47 +1,90 @@
+// This is a personal academic project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
+
 /**
- * @file StringTest.cpp
- * @brief Модульные тесты для класса String.
+ * @file    StringTest.cpp
+ * @brief   Модульные тесты для класса String.
  */
 
+#include <cstring>
 #include <string>
 
 #include <gtest/gtest.h>
 
 #include "Include/Library/String.hpp"
 
-TEST(StringConstructorTest, Default) {
+
+TEST(StringCtorTest, Default)
+{
    BabbleChat::String str;
    EXPECT_EQ(str.Length(), 0);
-   EXPECT_EQ(str.Data(), nullptr);
+   EXPECT_TRUE(str.IsEmpty());
+   EXPECT_STREQ(str.CStr(), "");
 }
 
 
-TEST(StringConstructorTest, CString_nullptr) {
-   EXPECT_THROW(BabbleChat::String str(nullptr), std::runtime_error);
+TEST(StringCtorTest, CString_SmallString)
+{
+   const char* input = "A Small String!";
+   BabbleChat::String str(input);
+
+   EXPECT_EQ(str.Length(), 15);
+   EXPECT_FALSE(str.IsEmpty());
+   EXPECT_STREQ(str.CStr(), input);
 }
 
 
-TEST(StringConstructorTest, CString_EmptyString) {
-   BabbleChat::String str("");
+TEST(StringCtorTest, CString_HeapString)
+{
+   const char* input = "This string is definitely longer than fifteen!";
+   BabbleChat::String str(input);
 
-   EXPECT_EQ(str.Length(), 0);
-   EXPECT_STREQ(str.Data(), "");
+   EXPECT_EQ(str.Length(), std::strlen(input));
+   EXPECT_FALSE(str.IsEmpty());
+   EXPECT_STREQ(str.CStr(), input);
 }
 
 
-TEST(StringConstructorTest, CString_SmallString) {
-   BabbleChat::String str("small string");
+TEST(StringCtorTest, CString_ExplicitLength)
+{
+   const char input[] = { 'a', 'b', '\0', 'c', 'd' };
+   BabbleChat::String str(input, 5);
 
-   EXPECT_EQ(str.Length(), 12);
-   EXPECT_STREQ(str.Data(), "small string");
+   EXPECT_EQ(str.Length(), 5);
+   EXPECT_EQ(std::memcmp(str.CStr(), input, 5), 0);
 }
 
 
-TEST(StringConstructorTest, CopyCtor_Correct) {
-   BabbleChat::String str1("first string");
-   BabbleChat::String str2 = str1;
+TEST(StringCopyTest, CopyCtor)
+{
+   BabbleChat::String original("Copy me!");
+   BabbleChat::String copy(original);
 
-   EXPECT_STREQ(str1.Data(), str2.Data());
+   EXPECT_EQ(copy.Length(), original.Length());
+   EXPECT_STREQ(copy.CStr(), original.CStr());
+}
+
+
+TEST(StringCopyTest, SelfAssigment)
+{
+   BabbleChat::String str("self");
+   str = str;
+
+   // Сравнение адресов указателей.
+   EXPECT_EQ(str.CStr(), str.CStr());
+}
+
+
+TEST(StringCopyTest, CopyAssignment)
+{
+   BabbleChat::String left("left");
+   BabbleChat::String right("right");
+
+   left = right;
+
+   EXPECT_EQ(left.Length(), right.Length());
+   EXPECT_STREQ(left.CStr(), right.CStr());
 }
 
 
